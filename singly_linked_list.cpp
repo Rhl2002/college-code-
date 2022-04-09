@@ -2,6 +2,7 @@
 using namespace std;
 
 struct Node{
+	
 	int data;
 	Node* next;
 
@@ -90,20 +91,58 @@ void Delete_Tail(Node **head){
 
 }
 
+void Delete_Node(Node *&head,int x){
+	if(head==NULL){
+		cout<<"List is Empty\n";
+		return ;
+	}
+	Node *temp=head,*ptr=head;
+	temp=temp->next;
+	if(ptr->data==x){
+		head=ptr->next;
+		delete(ptr);
+		return;	
+	}
+	while( temp){
+
+		if(temp->data==x ){
+			ptr->next=temp->next;
+			delete(temp);
+			return;
+		}
+		temp=temp->next;
+		ptr=ptr->next;
+	}
+}
+
+Node* Reverse(Node *head){
+	if(head==NULL){
+		return NULL;
+	}
+	Node *temp1,*temp2,*temp3; //three pointer algorithm
+	temp1=head;
+	temp2=NULL;
+	temp3=NULL;
+	while(temp1){
+		temp3=temp2;//pointing to previous node
+		temp2=temp1; //pointing to node to be reversed
+		temp1=temp1->next; //iterating list
+		temp2->next=temp3; //pointing current node to previous node
+	}
+	head=temp2;
+	return head;
+}
 int main(){
 	Node *head=NULL;
-	head=Insert_at_Head(head,5);
+	head=Insert_at_Head(head,25);
 
-	//head=Insert_at_Tail(head,30);
-	//Display(head);
-	//head=Insert_at_Head(head,20);
-	//head=Insert_at_Head(head,10);
-	//head=Insert_at_Tail(head,40);
+	head=Insert_at_Tail(head,30);
+
+	head=Insert_at_Head(head,20);
+	head=Insert_at_Head(head,10);
+	head=Insert_at_Tail(head,40);
 	Display(head);
-	Delete_Head(head);
+	head=Reverse(head);
 	Display(head);
-	Delete_Tail(&head);
-	Display(head);
-	
-	
 }
+
